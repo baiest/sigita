@@ -1,7 +1,7 @@
 # SIGITA
+**Sistema de Gestion de Inventario para Tienda de Abarrotes**
 
-
-Este repositorio contiene la totalidad del codigo asociado al desarrollo de **Sistema de Gestion de Inventario para Tienda de Abarrotes** para el proyecto final del curso Aplicaciones en el Web y Redes Inalámbricas.
+Este repositorio contiene la totalidad del codigo asociado al desarrollo del proyecto final del curso Aplicaciones en el Web y Redes Inalámbricas.
 
 ## Integrantes
 
