@@ -1,11 +1,12 @@
-# sigita
-Sistema de gestion de inventario para tienda de abarrotes
+# SIGITA
+Sistema de Gestion de Inventario para Tienda de Abarrotes
 
 Proyecto para el curso de Aplicaciones en la web
 
 - Juan Carlos Ballesteros Romero 1735922-2711
 - Daniel Fernando Luna Sanchez 1727654-2711
 - Paula Daniela Melo Angulo 1629210-2711
+- Aida Milena Mina Caicedo 1225328-3743
 
 
 # Getting Started with Create React App
