@@ -1,7 +1,9 @@
 # SIGITA
 Sistema de Gestion de Inventario para Tienda de Abarrotes
 
-Proyecto para el curso de Aplicaciones en la web
+Este repositorio contiene la totalidad del codigo asociado al proyecto final del curso Aplicaciones en el Web y Redes Inalámbricas.
+
+## Integrantes
 
 - Juan Carlos Ballesteros Romero 1735922-2711
 - Daniel Fernando Luna Sanchez 1727654-2711
