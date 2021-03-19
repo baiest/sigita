@@ -9,8 +9,6 @@ app.use(express.urlencoded({ extended: true }));
 // Se agrega el nombre del archivo que contiene la ruta
 let rutas = [
     'index',
-    'index copy 2',
-    'index copy'
 ]
 
 // se antepone la ruta /api y se recorre el arreglo rutas para
