@@ -1,0 +1,12 @@
+#tarjeta {
+    color: #FFF;
+    flex-wrap: wrap;
+    margin: 0 auto;
+    padding: 2%;
+    background: #14213D;
+    border-radius: 10px;
+}
+
+#tarjeta a {
+    color: #FFF;
+}
