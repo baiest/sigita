@@ -3,10 +3,17 @@ import { Component } from "react";
 import { GoogleLogin } from "react-google-login";
 import './Login.css';
 
-const clientId = '4gd9i3tvp8jl0p7h1sm0avejj135ljoj.apps.googleusercontent.com'
+const clientId = '152237555650-4gd9i3tvp8jl0p7h1sm0avejj135ljoj.apps.googleusercontent.com'
 
+const requestOptions = {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+}
 const onSuccess = (res) =>{
-    console.log('[Login success] currentUser:', res.profileOnj);
+    console.log('[Login success] currentUser:', res.profileObj);
+    requestOptions.body = JSON.stringify({ user: res.profileObj});
+    fetch('/api/login', requestOptions)
+        .then((api_res)=> api_res.body.user != null ? console.log('Algo fallo') : console.log('Logueado'));
 }
 
 const onFailure = (res) => {
@@ -33,7 +40,9 @@ class Login extends Component {
                         clientId={clientId}
                         buttonText="Entra con Google"
                         onSuccess={onSuccess}
-                        onFailure={onFailure}                    
+                        onFailure={onFailure}  
+                        cookiePolicy={'http://localhost:5000'}
+                        isSignedIn={true}                  
                     />
                 </Form.Group>
             </Form>

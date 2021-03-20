@@ -3,7 +3,7 @@ const router = express.Router();
 
 router.get('/', (req, res) => {
     res.send({
-        msj: "Hola index"
+        msj: "Hola desde el index",
     });
 });
 
