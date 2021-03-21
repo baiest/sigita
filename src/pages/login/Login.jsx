@@ -1,6 +1,7 @@
 import { Button, Form } from "react-bootstrap";
 import { Component } from "react";
 import { GoogleLogin } from "react-google-login";
+import axios from 'axios';
 import './Login.css';
 
 // Borrar esto al desplegar
@@ -25,8 +26,7 @@ export default class Login extends Component {
         super(props);
         this.state = {
             username: '',
-            password: '',
-            error: 'Usuario no encontrado'
+            password: ''
         }
 
         this.enviarDatos = this.enviarDatos.bind(this);
@@ -42,10 +42,17 @@ export default class Login extends Component {
 
     enviarDatos(event){
         event.preventDefault();
-        if (this.state.error)
-            document.getElementById('error').classList.remove('d-none');
-        console.log(document.getElementById('error'));
-        console.log(this.state);
+        requestOptions.body = JSON.stringify(this.state);
+        axios.post('/api/login', this.state)
+            .then((api_res) => {
+                if(api_res.data.session){
+                    console.log(api_res.data)
+                }else{
+                    this.setState({error: api_res.data.error})
+                    document.getElementById('error').classList.remove('d-none');
+                }
+            })
+            .catch(api_err => console.log(api_err));
     }
 
     render() {
