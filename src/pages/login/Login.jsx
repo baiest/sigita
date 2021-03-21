@@ -3,6 +3,7 @@ import { Component } from "react";
 import { GoogleLogin } from "react-google-login";
 import './Login.css';
 
+// Borrar esto al desplegar
 const clientId = '152237555650-4gd9i3tvp8jl0p7h1sm0avejj135ljoj.apps.googleusercontent.com'
 
 const requestOptions = {
@@ -19,17 +20,45 @@ const onSuccess = (res) =>{
 const onFailure = (res) => {
     console.log('[Login failed] res:', res);
 }
-class Login extends Component {
+export default class Login extends Component {
+    constructor(props){
+        super(props);
+        this.state = {
+            username: '',
+            password: '',
+            error: 'Usuario no encontrado'
+        }
+
+        this.enviarDatos = this.enviarDatos.bind(this);
+        this.updateState = this.updateState.bind(this);
+    }
+    
+    updateState(event){
+        let { id, value } = event.target;
+        let objeto = {};
+        objeto[id] = value
+        this.setState(objeto)
+    }
+
+    enviarDatos(event){
+        event.preventDefault();
+        if (this.state.error)
+            document.getElementById('error').classList.remove('d-none');
+        console.log(document.getElementById('error'));
+        console.log(this.state);
+    }
+
     render() {
         return (
         <div id="tarjeta" className="card">
             <span className="card-head display-4"><strong>Login</strong></span>
-            <Form className="card-body">
+            <Form className="card-body" onSubmit={ this.enviarDatos }>
+                <p id="error" className="alert alert-danger d-none">{this.state.error}</p>
                 <Form.Group>
-                    <Form.Control type="text" placeholder="Usuario"/>
+                    <Form.Control id="username" type="text" placeholder="Usuario" onChange={ this.updateState }/>
                 </Form.Group>
                 <Form.Group>
-                    <Form.Control type="password" placeholder="Contraseña"/>
+                    <Form.Control id="password" type="password" placeholder="Contraseña" onChange={ this.updateState }/>
                 </Form.Group>
                 <Form.Group>
                     <Button type="submit" variant="outline-warning" size="lg" block>Entrar</Button>
@@ -54,5 +83,3 @@ class Login extends Component {
             );
     }
 }
-
-export default Login;
