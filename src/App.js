@@ -12,14 +12,12 @@ import Login from './pages/login/Login'
 function App() {
   const [show, setShow ] = useState(false);
   
-  const connect = () => {
-    axios.get('/api')
-      .catch(() => setShow(true));
-  }
+  const connect = () => axios.get('/api').catch(() => setShow(true));
 
+  connect()
+  
   return (
     <div className="App">
-      {connect()}
       <Toast id="info" show={show} animation={true} onClose={() => setShow(!show)}>
           <Toast.Header  className="bg-danger" style={{ color: '#fff' }}>
           <strong className="mr-auto">Error</strong>

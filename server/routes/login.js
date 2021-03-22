@@ -5,7 +5,7 @@ router.post('/login', (req, res) => {
     console.log('Alguien esta entrando en el login', req.body);
     let data = req.body;
     let respuesta = {};
-    let status = 200
+
     if (data.username === 'admin') {
         if (data.password === 'admin') {
             respuesta.session = true;
