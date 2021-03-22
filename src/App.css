@@ -1,5 +1,11 @@
 .App {
-    display: flex;
+    display: inline;
     text-align: center;
     margin-top: 5%;
+}
+
+.toast {
+    position: absolute;
+    top: 2%;
+    left: 2%;
 }

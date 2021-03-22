@@ -1,20 +1,16 @@
 import { Button, Form } from "react-bootstrap";
 import { Component } from "react";
 import { GoogleLogin } from "react-google-login";
+import { Toast } from 'react-bootstrap';
 import axios from 'axios';
 import './Login.css';
 
 // Borrar esto al desplegar
 const clientId = '152237555650-4gd9i3tvp8jl0p7h1sm0avejj135ljoj.apps.googleusercontent.com'
 
-const requestOptions = {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-}
 const onSuccess = (res) =>{
     console.log('[Login success] currentUser:', res.profileObj);
-    requestOptions.body = JSON.stringify({ user: res.profileObj});
-    fetch('/api/login', requestOptions)
+    axios.post('/api/login', res.profileObj)
         .then((api_res)=> api_res.body.user != null ? console.log('Algo fallo') : console.log('Logueado'));
 }
 
@@ -24,11 +20,12 @@ const onFailure = (res) => {
 export default class Login extends Component {
     constructor(props){
         super(props);
+        console.log(props)
         this.state = {
             username: '',
             password: ''
         }
-
+        
         this.enviarDatos = this.enviarDatos.bind(this);
         this.updateState = this.updateState.bind(this);
     }
@@ -42,17 +39,22 @@ export default class Login extends Component {
 
     enviarDatos(event){
         event.preventDefault();
-        requestOptions.body = JSON.stringify(this.state);
+        let error_m = document.getElementById('error').classList;
         axios.post('/api/login', this.state)
             .then((api_res) => {
                 if(api_res.data.session){
+                    error_m.add('d-none');
+                    event.target.username.value = ''
+                    event.target.password.value = ''
                     console.log(api_res.data)
                 }else{
                     this.setState({error: api_res.data.error})
-                    document.getElementById('error').classList.remove('d-none');
+                    error_m.remove('d-none');
                 }
             })
-            .catch(api_err => console.log(api_err));
+            .catch(api_err => {
+                console.log(api_err);
+            });
     }
 
     render() {
