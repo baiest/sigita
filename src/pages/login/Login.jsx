@@ -33,6 +33,7 @@ export default class Login extends Component {
         this.state = {
             username: '',
             password: '',
+            error: ''
         }
         
         this.enviarDatos = this.enviarDatos.bind(this);
@@ -44,6 +45,13 @@ export default class Login extends Component {
         let objeto = {};
         objeto[id] = value
         this.setState(objeto)
+        if (this.state.username.includes(' ')){
+            this.setState({error: 'Username invalido'})
+        }else{
+            this.setState({error: ''})
+        }
+
+        console.log(this.state.error)
     }
 
     enviarDatos(event){
@@ -53,10 +61,8 @@ export default class Login extends Component {
 
         axios.post('/api/login', this.state)
             .then((api_res) => {
-                let error_m = document.getElementById('error').classList;
-                
+                                
                 if(api_res.data.session){
-                    error_m.add('d-none');
                 
                     form.username.value = '';
                     form.password.value = '';
@@ -64,7 +70,6 @@ export default class Login extends Component {
                     this.props.history.push('/');
                 }else{
                     this.setState({error: api_res.data.error});
-                    error_m.remove('d-none')
                 }
             })
             .catch(api_err => {
@@ -77,7 +82,7 @@ export default class Login extends Component {
         <div id="tarjeta" className="card">
             <span className="card-head display-4"><strong>Login</strong></span>
             <Form className="card-body" onSubmit={ this.enviarDatos }>
-                <p id="error" className="alert alert-danger d-none">{this.state.error}</p>
+                <p id="error" className={`alert alert-danger ${this.state.error === '' ? 'd-none' : '' }`}>{this.state.error}</p>
                 <Form.Group>
                     <Form.Control required id="username" type="text" placeholder="Usuario" onChange={ this.updateState }/>
                 </Form.Group>
