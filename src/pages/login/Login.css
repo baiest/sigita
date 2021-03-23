@@ -1,9 +1,8 @@
 #tarjeta {
     color: #FFF;
-    flex-wrap: wrap;
     margin: 0 auto;
-    margin-top: 110px;
-    padding: 20px;
+    margin-top: 70px;
+    padding: 2%;
     background: #14213D;
     border-radius: 10px;
     width: 350px;
