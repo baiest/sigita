@@ -3,20 +3,30 @@ import { Component } from "react";
 import { GoogleLogin } from "react-google-login";
 import axios from 'axios';
 import './Login.css';
-import { Redirect } from "react-router";
 
 // Borrar esto al desplegar
 const clientId = '152237555650-4gd9i3tvp8jl0p7h1sm0avejj135ljoj.apps.googleusercontent.com'
 
+// Funciones para autenticacion con Google
 const onSuccess = (res) =>{
     console.log('[Login success] currentUser:', res.profileObj);
     axios.post('/api/login', res.profileObj)
-        .then((api_res)=> api_res.body.user != null ? console.log('Algo fallo') : console.log('Logueado'));
+        .then((api_res)=> {
+            if(api_res.data.session){
+                window.localStorage.setItem('token', api_res.data.token);
+                window.location = '/';
+            }else{
+                console.log('Algo salio mal');
+            }
+        })
+        .catch((api_err) => console.log("Hubo un error: ", api_err));
 }
 
 const onFailure = (res) => {
     console.log('[Login failed] res:', res);
 }
+
+//Funciones para autenticacion
 export default class Login extends Component {
     constructor(props){
         super(props);
@@ -39,19 +49,22 @@ export default class Login extends Component {
     enviarDatos(event){
         event.preventDefault();
         let form = event.currentTarget;
-        
-        let error_m = document.getElementById('error').classList;
-        
+        delete this.state.error;
+
         axios.post('/api/login', this.state)
             .then((api_res) => {
+                let error_m = document.getElementById('error').classList;
+                
                 if(api_res.data.session){
                     error_m.add('d-none');
+                
                     form.username.value = '';
                     form.password.value = '';
+                    window.localStorage.setItem('token', api_res.data.token);
                     this.props.history.push('/');
                 }else{
                     this.setState({error: api_res.data.error});
-                    error_m.remove('d-none');
+                    error_m.remove('d-none')
                 }
             })
             .catch(api_err => {
